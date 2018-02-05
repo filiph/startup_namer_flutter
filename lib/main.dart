@@ -38,10 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _getNewNames() {
     final newNames = generateWordPairs().take(10);
-    setState(() {
-      _pairs.clear();
-      _pairs.addAll(newNames);
-    });
+    _pairs.addAll(newNames);
   }
 
   @override
@@ -50,21 +47,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _pairs
-              .map((pair) => new ListTile(
-                    title: new Text(pair.join()),
-                  ))
-              .toList(),
-        ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _getNewNames,
-        tooltip: 'Get new ideas',
-        child: new Icon(Icons.refresh),
-      ),
+      body: new ListView.builder(itemBuilder: (context, index) {
+        while (index >= _pairs.length) {
+          _getNewNames();
+        }
+        return new NameWidget(_pairs[index]);
+      }),
     );
+  }
+}
+
+class NameWidget extends StatelessWidget {
+  final WordPair _pair;
+
+  NameWidget(this._pair);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text(_pair.toString());
   }
 }
