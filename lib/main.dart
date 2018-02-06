@@ -25,44 +25,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class NameWidget extends StatelessWidget {
-  final WordPair _pair;
-
-  final bool _saved;
-
-  final GestureTapCallback _onTap;
-
-  NameWidget(this._pair, this._saved, this._onTap);
-
-  @override
-  Widget build(BuildContext context) {
-    final richText = new RichText(
-      text: new TextSpan(
-          children: <TextSpan>[
-            new TextSpan(
-              text: _pair.first.toLowerCase(),
-              style: new TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            new TextSpan(text: _pair.second.toLowerCase())
-          ],
-          style: new TextStyle(
-              color: Colors.black54,
-              fontSize: 24.0,
-              fontFamily: 'Gloria Hallelujah')),
-    );
-    return new ListTile(
-      leading: new Icon(
-        _saved ? Icons.star : Icons.star_border,
-        size: 24.0,
-      ),
-      title: richText,
-      onTap: _onTap,
-    );
-  }
-}
-
 class _MyHomePageState extends State<MyHomePage> {
-  final List<WordPair> _suggestions = [];
+  final List<WordPair> _suggestions = generateWordPairs().take(10).toList();
   final Set<WordPair> _saved = new Set();
 
   @override
@@ -72,32 +36,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text(widget.title),
       ),
       body: _buildSuggestions(),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: _refresh,
+        child: new Icon(Icons.refresh),
+      ),
     );
   }
 
-  void initState() {
-    super.initState();
-    _getNewNames();
+  Widget _buildRow(WordPair pair) {
+    return new Text(pair.join());
   }
 
   ListView _buildSuggestions() {
-    return new ListView.builder(itemBuilder: (context, index) {
-      while (index >= _suggestions.length) {
-        _getNewNames();
-      }
-      final pair = _suggestions[index];
-      return new NameWidget(pair, _saved.contains(pair), () {
-        if (_saved.contains(pair)) {
-          setState(() => _saved.remove(pair));
-          return;
-        }
-        setState(() => _saved.add(pair));
-      });
-    });
+    return new ListView(children: _suggestions.map(_buildRow).toList(),);
   }
 
-  void _getNewNames() {
-    final newNames = generateWordPairs().take(10);
-    _suggestions.addAll(newNames);
+  void _refresh() {
+    setState(() {
+      _suggestions.clear();
+      _suggestions.addAll(generateWordPairs().take(10));
+    });
   }
 }
