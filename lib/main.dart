@@ -86,7 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
       child: new Container(
           padding: const EdgeInsets.all(16.0),
           color: Theme.of(context).backgroundColor,
-          child: new Text(_saved.map((p) => p.join()).join(", "))),
+          child: new Row(
+            children: [
+              new Expanded(
+                  child: new Text(_saved.map((p) => p.join()).join(", ")))
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+          )),
     );
   }
 
