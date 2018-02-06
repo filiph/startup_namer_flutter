@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Startup Namer',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: new MyHomePage(title: 'Startup Namer'),
     );
@@ -35,7 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: _buildSuggestions(),
+      body: new Column(children: [
+        _buildSuggestions(),
+        _buildSaved(),
+      ]),
       floatingActionButton: new FloatingActionButton(
         onPressed: _refresh,
         child: new Icon(Icons.refresh),
@@ -44,11 +47,47 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildRow(WordPair pair) {
-    return new Text(pair.join());
+    return new Row(children: [
+      new Expanded(
+          child: new RichText(
+              text: new TextSpan(
+                  children: [
+            new TextSpan(
+                text: pair.first.toLowerCase(),
+                style: new TextStyle(color: Theme.of(context).primaryColor)),
+            new TextSpan(
+                text: pair.second.toLowerCase(),
+                style: new TextStyle(color: Colors.black87)),
+          ],
+                  style: new TextStyle(
+                      fontSize: 18.0,
+                      fontWeight:
+                          _saved.contains(pair) ? FontWeight.bold : null)))),
+      new IconButton(
+          icon: new Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              _saved.add(pair);
+            });
+          })
+    ]);
   }
 
-  ListView _buildSuggestions() {
-    return new ListView(children: _suggestions.map(_buildRow).toList(),);
+  Widget _buildSuggestions() {
+    return new ListView(
+      padding: const EdgeInsets.all(16.0),
+      shrinkWrap: true,
+      children: _suggestions.map(_buildRow).toList(),
+    );
+  }
+
+  Widget _buildSaved() {
+    return new Expanded(
+      child: new Container(
+          padding: const EdgeInsets.all(16.0),
+          color: Theme.of(context).backgroundColor,
+          child: new Text(_saved.map((p) => p.join()).join(", "))),
+    );
   }
 
   void _refresh() {
