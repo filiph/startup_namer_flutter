@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.white,
         title: new Text(widget.title),
       ),
       body: _buildSuggestions(),
@@ -50,21 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         });
       },
-      leading: new Icon(
-          _saved.contains(pair) ? Icons.bookmark : Icons.bookmark_border),
-      title: new RichText(
-          text: new TextSpan(
-              children: [
-            new TextSpan(
-                text: pair.first.toLowerCase(),
-                style: new TextStyle(color: Theme.of(context).primaryColor)),
-            new TextSpan(
-                text: pair.second.toLowerCase(),
-                style: new TextStyle(color: Colors.black87)),
-          ],
-              style: new TextStyle(
-                fontSize: 18.0,
-              ))),
+      trailing: new Icon(
+          _saved.contains(pair) ? Icons.favorite : Icons.favorite_border,
+          color: _saved.contains(pair) ? Colors.red : null),
+      title: new Text(
+        pair.join(),
+        style: new TextStyle(fontSize: 18.0, color: Colors.black87),
+      ),
     );
   }
 
