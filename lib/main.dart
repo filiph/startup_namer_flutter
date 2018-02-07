@@ -34,15 +34,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.refresh),
+            tooltip: 'Refresh suggestions',
+            onPressed: _refresh,
+          ),
+        ],
       ),
       body: new Column(children: [
         _buildSuggestions(),
         _buildSaved(),
       ]),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _refresh,
-        child: new Icon(Icons.refresh),
-      ),
     );
   }
 
@@ -74,26 +77,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildSuggestions() {
-    return new ListView(
-      padding: const EdgeInsets.all(16.0),
-      shrinkWrap: true,
-      children: _suggestions.map(_buildRow).toList(),
+    return new Expanded(
+      child: new ListView(
+        padding: const EdgeInsets.all(16.0),
+        shrinkWrap: true,
+        children: _suggestions.map(_buildRow).toList(),
+      ),
     );
   }
 
   Widget _buildSaved() {
-    return new Expanded(
-      child: new Container(
-          padding: const EdgeInsets.all(16.0),
-          color: Theme.of(context).backgroundColor,
-          child: new Row(
-            children: [
-              new Expanded(
-                  child: new Text(_saved.map((p) => p.join()).join(", ")))
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-          )),
-    );
+    return new Container(
+        padding: const EdgeInsets.all(16.0),
+        color: Theme.of(context).backgroundColor,
+        child: new Row(
+          children: [
+            new Expanded(
+                child: new Text(_saved.map((p) => p.join()).join(", ")))
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ));
   }
 
   void _refresh() {
