@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<WordPair> _suggestions = generateWordPairs().take(10).toList();
+  final List<WordPair> _suggestions = [];
   final Set<WordPair> _saved = new Set();
 
   @override
@@ -34,27 +34,27 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(Icons.refresh),
-            tooltip: 'Refresh suggestions',
-            onPressed: _refresh,
-          ),
-        ],
       ),
-      body: new Column(children: [
-        _buildSuggestions(),
-        _buildSaved(),
-      ]),
+      body: _buildSuggestions(),
     );
   }
 
   Widget _buildRow(WordPair pair) {
-    return new Row(children: [
-      new Expanded(
-          child: new RichText(
-              text: new TextSpan(
-                  children: [
+    return new ListTile(
+      onTap: () {
+        setState(() {
+          if (_saved.contains(pair)) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
+      leading: new Icon(
+          _saved.contains(pair) ? Icons.bookmark : Icons.bookmark_border),
+      title: new RichText(
+          text: new TextSpan(
+              children: [
             new TextSpan(
                 text: pair.first.toLowerCase(),
                 style: new TextStyle(color: Theme.of(context).primaryColor)),
@@ -62,47 +62,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: pair.second.toLowerCase(),
                 style: new TextStyle(color: Colors.black87)),
           ],
-                  style: new TextStyle(
-                      fontSize: 18.0,
-                      fontWeight:
-                          _saved.contains(pair) ? FontWeight.bold : null)))),
-      new IconButton(
-          icon: new Icon(Icons.add),
-          onPressed: () {
-            setState(() {
-              _saved.add(pair);
-            });
-          })
-    ]);
-  }
-
-  Widget _buildSuggestions() {
-    return new Expanded(
-      child: new ListView(
-        padding: const EdgeInsets.all(16.0),
-        shrinkWrap: true,
-        children: _suggestions.map(_buildRow).toList(),
-      ),
+              style: new TextStyle(
+                fontSize: 18.0,
+              ))),
     );
   }
 
-  Widget _buildSaved() {
-    return new Container(
-        padding: const EdgeInsets.all(16.0),
-        color: Theme.of(context).backgroundColor,
-        child: new Row(
-          children: [
-            new Expanded(
-                child: new Text(_saved.map((p) => p.join()).join(", ")))
-          ],
-          crossAxisAlignment: CrossAxisAlignment.start,
-        ));
-  }
+  Widget _buildSuggestions() {
+    return new ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i) {
+        if (i.isOdd) return new Divider();
 
-  void _refresh() {
-    setState(() {
-      _suggestions.clear();
-      _suggestions.addAll(generateWordPairs().take(10));
-    });
+        final index = i ~/ 2;
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+
+        return _buildRow(_suggestions[index]);
+      },
+    );
   }
 }
