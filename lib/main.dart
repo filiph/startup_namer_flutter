@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Startup Namer',
       theme: new ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primaryColor: Colors.white,
       ),
       home: new MyHomePage(title: 'Startup Namer'),
     );
@@ -27,24 +27,33 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<WordPair> _suggestions = [];
-  final Set<WordPair> _saved = new Set();
+
+  final List<WordPair> _saved = [];
+
+  final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        backgroundColor: Colors.white,
         title: new Text(widget.title),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.list),
+            onPressed: _pushSaved,
+          ),
+        ],
       ),
       body: _buildSuggestions(),
     );
   }
 
   Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
     return new ListTile(
       onTap: () {
         setState(() {
-          if (_saved.contains(pair)) {
+          if (alreadySaved) {
             _saved.remove(pair);
           } else {
             _saved.add(pair);
@@ -52,11 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       },
       trailing: new Icon(
-          _saved.contains(pair) ? Icons.favorite : Icons.favorite_border,
-          color: _saved.contains(pair) ? Colors.red : null),
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
       title: new Text(
         pair.join(),
-        style: new TextStyle(fontSize: 18.0, color: Colors.black87),
+        style: _biggerFont,
       ),
     );
   }
@@ -74,6 +84,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
         return _buildRow(_suggestions[index]);
       },
+    );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+          final tiles = _saved.map(
+            (pair) => new ListTile(
+                    title: new Text(
+                  pair.join(),
+                  style: _biggerFont,
+                )),
+          );
+          final divided = ListTile
+              .divideTiles(
+                context: context,
+                tiles: tiles,
+              )
+              .toList();
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text("Saved suggestions"),
+            ),
+            body: new ListView(children: divided),
+          );
+        },
+      ),
     );
   }
 }
