@@ -51,6 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return new ListTile(
+      title: new Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
       onTap: () {
         setState(() {
           if (alreadySaved) {
@@ -60,14 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         });
       },
-      trailing: new Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      title: new Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
     );
   }
 
