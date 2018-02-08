@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: alreadySaved ? Colors.red : null,
       ),
       title: new Text(
-        pair.join(),
+        pair.asPascalCase,
         style: _biggerFont,
       ),
     );
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
           final tiles = _saved.map(
             (pair) => new ListTile(
                     title: new Text(
-                  pair.join(),
+                  pair.asPascalCase,
                   style: _biggerFont,
                 )),
           );

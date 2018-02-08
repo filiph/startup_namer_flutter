@@ -2,7 +2,7 @@ name: startup_namer_flutter
 description: Name your startup fast and with style.
 
 dependencies:
-  english_words: ^2.0.4
+  english_words: ^3.0.1
   flutter:
     sdk: flutter
 
