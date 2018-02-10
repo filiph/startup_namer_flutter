@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text("Saved suggestions"),
+              title: new Text('Saved suggestions'),
             ),
             body: new ListView(children: divided),
           );
