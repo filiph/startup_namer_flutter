@@ -7,25 +7,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Startup Namer',
+      title: 'Startup Name Generator',
       theme: new ThemeData(
         primaryColor: Colors.white,
       ),
-      home: new MyHomePage(title: 'Startup Namer'),
+      home: new StartupNamePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class StartupNamePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  createState() => new _StartupNameState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _StartupNameState extends State<StartupNamePage> {
   final List<WordPair> _suggestions = [];
 
   final List<WordPair> _saved = [];
@@ -36,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text('Startup Name Generator'),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.list),
