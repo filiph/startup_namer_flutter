@@ -57,7 +57,11 @@ class RandomWordsState extends State<RandomWords> {
       ),
       onTap: () {
         setState(() {
-          alreadySaved ? _saved.remove(pair) : _saved.add(pair);
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
         });
       },
     );
