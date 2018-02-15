@@ -22,9 +22,9 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final List<WordPair> _suggestions = [];
-
-  final List<WordPair> _saved = [];
+  final  _suggestions = <WordPair>[];
+  
+  final _saved = <WordPair>[];
 
   final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
 
