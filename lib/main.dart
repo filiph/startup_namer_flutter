@@ -1,5 +1,5 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() => runApp(new MyApp());
 
@@ -22,9 +22,9 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final  _suggestions = <WordPair>[];
-  
-  final _saved = <WordPair>[];
+  // Dart lets you define lists in different ways
+  final _suggestions = <WordPair>[];  
+  final List<WordPair> _saved = [];
 
   final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
 
@@ -57,11 +57,7 @@ class RandomWordsState extends State<RandomWords> {
       ),
       onTap: () {
         setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
+          alreadySaved ? _saved.remove(pair) : _saved.add(pair);
         });
       },
     );
@@ -77,7 +73,6 @@ class RandomWordsState extends State<RandomWords> {
         if (index >= _suggestions.length) {
           _suggestions.addAll(generateWordPairs().take(10));
         }
-
         return _buildRow(_suggestions[index]);
       },
     );
