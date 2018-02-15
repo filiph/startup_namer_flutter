@@ -86,13 +86,13 @@ class RandomWordsState extends State<RandomWords> {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
-          final tiles = _saved.map(
-            (pair) => new ListTile(
-                    title: new Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                )),
-          );
+          final tiles = _saved.map((pair) {
+            return new ListTile(
+                title: new Text(
+              pair.asPascalCase,
+              style: _biggerFont,
+            ));
+          });
           final divided = ListTile
               .divideTiles(
                 context: context,
