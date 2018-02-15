@@ -11,17 +11,17 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.white,
       ),
-      home: new StartupNamePage(),
+      home: new RandomWords(),
     );
   }
 }
 
-class StartupNamePage extends StatefulWidget {
+class RandomWords extends StatefulWidget {
   @override
-  createState() => new _StartupNameState();
+  createState() => new RandomWordsState();
 }
 
-class _StartupNameState extends State<StartupNamePage> {
+class RandomWordsState extends State<RandomWords> {
   final List<WordPair> _suggestions = [];
 
   final List<WordPair> _saved = [];
