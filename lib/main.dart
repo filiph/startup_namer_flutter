@@ -22,9 +22,9 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  // Dart lets you define lists in different ways
-  final _suggestions = <WordPair>[];  
-  final List<WordPair> _saved = [];
+  final _suggestions = <WordPair>[];
+
+  final _saved = new Set<WordPair>();
 
   final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
 
