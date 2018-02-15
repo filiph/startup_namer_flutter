@@ -42,11 +42,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Gloria Hallelujah
-      fonts:
-        - asset: fonts/GloriaHallelujah.ttf
-
+  # fonts:
+  #   - family: Gloria Hallelujah
+  #     fonts:
+  #       - asset: fonts/GloriaHallelujah.ttf
   #
   # For details regarding fonts from package dependencies, 
   # see https://flutter.io/custom-fonts/#from-packages
