@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
 
 class RandomWords extends StatefulWidget {
   @override
-  createState() => new RandomWordsState();
+  RandomWordsState createState() => new RandomWordsState();
 }
 
 class RandomWordsState extends State<RandomWords> {
@@ -93,12 +93,10 @@ class RandomWordsState extends State<RandomWords> {
               style: _biggerFont,
             ));
           });
-          final divided = ListTile
-              .divideTiles(
-                context: context,
-                tiles: tiles,
-              )
-              .toList();
+          final divided = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          ).toList();
 
           return new Scaffold(
             appBar: new AppBar(

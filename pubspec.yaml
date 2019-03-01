@@ -2,10 +2,11 @@ name: startup_namer_flutter
 description: Name your startup fast and with style.
 
 dependencies:
-  english_words: ^3.1.0
+  english_words: ^3.1.5
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.0
+  cupertino_icons: ^0.1.2
+  pedantic: ^1.5.0
 
 flutter:
   uses-material-design: true
